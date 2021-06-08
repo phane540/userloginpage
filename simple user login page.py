@@ -1,64 +1,181 @@
 from tkinter import *
 from tkinter import messagebox
+import smtplib
 
+global root
+global root1
 
-#methods
-def Login():
-    e1=StringVar()
-    e2=StringVar()
-    uname=e1.get()
-    password=e2.get()
+'''-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  '''   
 
+def Login_page():
+    #methods
+    def Login():
       
+        uname=e1.get()
+        password=e2.get()
 
-    if (uname=='abcd' and password=='12345'):
         
-        messagebox.showinfo('','Login success')
+        
+        if (uname =='abcd' and password =='1234' ):
+            messagebox.showinfo("Login","Login Success")
+        else:
+            messagebox.showinfo('Login','please enter valid username and password')
     
-    else:
-        messagebox.showinfo('','please enter valid username and password')
 
-def Forgotpassword():
-     messagebox.showinfo('forgot password','your password is :12345')
+    def Forgotpassword():
+        messagebox.showinfo('Forgot Password','Your registered Password has been sent to your registered mail. Please check your mail and try to login again')
+
+        mail="19MH1A0506@acoe.edu.in"
+       
+        server= smtplib.SMTP_SSL("smtp.gmail.com",465)
+        server.login("userlogin803@gmail.com", "abcd@1234")
+        server.sendmail("userlogin803@gmail.com",mail,"hello")
+       
+
+        server.quit()
+
+    
+    def go_to_createaccount():
+        root.destroy()
+        create_new_account()
 
 
 
+
+       
+#______________
 
 #LOGIN PAGE
+   
+    root=Tk()
+    root.title("USER LOGIN ")
+    width= root.winfo_screenwidth()               
 
-root=Tk()
-root.title("USER LOGIN ")
-root.geometry('600x300')
+    height= root.winfo_screenheight()               
 
-
-global e1
-global e2
-
-
-#labels
-bg=PhotoImage( file="F:/Sample-png-image-1mb1.png")
-
-label_image=Label(root,image=bg)
-label_image.pack()
-
-Label(root,text='login or signup',bg='white',fg='black',font=("Times new Roman",20)).place(x=210,y=10)
-Label(root,text='username or email',fg='black',font=('',10)).place(x=240,y=90)
-Label(root,text='password',fg='black',font=('',10)).place(x=240,y=150)
-
-e1=Entry(root,width=20).place(x=240,y=120)
-e2=Entry(root,width=20)
-e2.place(x=240,y=180)
-e2.config(show="*")
+    root.geometry("%dx%d" % (width, height))
+    global e1
+    global e2
+  
+    e1=StringVar()
+    e2=StringVar()
 
 
-#buttons
+    #labels
+    '''bg=PhotoImage( file="C:/Users/phane/Downloads/754629.png")
 
-Button(root,text='Login', command =Login,bg='orange',fg='white',font=("Times new Roman",12)).place(x=270,y=200)
+    label_image=Label(root,image=bg)
+    label_image.pack()'''
+
+    Label(root,text='Login or Sign in',bg='blue',fg='black',font=("Times new Roman Bold",20)).place(x=550,y=50)
+    Label(root,text='Username',fg='black',font=('Times new Roman',10)).place(x=510,y=190)
+    Label(root,text='Password',fg='black',font=('Times new Roman',10)).place(x=510,y=220)
+
+    num1=Entry(root,width=20,textvariable=e1).place(x=650,y=190)
+    num2=Entry(root,width=20,show="*",textvariable=e2).place(x=650,y=220)
 
 
+
+    #buttons
+
+
+    LB=Button(root,text='Login', command =Login,bg='orange',fg='white',font=("Times new Roman",12)).place(x=625,y=270)
+
+    Button(root,text='Forgot Password',command=Forgotpassword,font=("Times new Roman",9),fg='white',bg='red').place(x=600,y=310)
+    #Button(root,text='Change Password',command=changepassword
+    Button(root,text='create new account',command=go_to_createaccount,bg='grey').place(x=590,y=360)
     
-Button(root,text='Forgot Password',command=Forgotpassword,font=("Times new Roman",9),fg='white',bg='red').place(x=245,y=240)
+
+
+    root.mainloop()
+
+
+
+'''______________
+_______________
+
+'''
+
+def create_new_account():
+    
+    def create_account():
+
+        user_name=name.get()
+        pass_word=Password.get()
+        confirm_password=confirmpass.get()
+        user_mail=email.get()
+        
+
+        if (len(user_name)!=5 or len(pass_word)!=6 or len(confirm_password)==0 or len(user_mail)==0 or ('@gmail.com' not in user_mail )):
+
+            messagebox.showinfo('Create account','please enter your details')
+            
+        else:
+            if (pass_word != confirm_password):
+                messagebox.showinfo('confirm password','passwords not matched, please re-enter confirm password')
+           
+            else:
+                messagebox.showinfo("create new account",'Your Account Created Successfully')
+                root1.destroy()
+                Login_page()
+                
+            
+    def go_to_login():
+        
+         root1.destroy()
+         Login_page()
+       
+       
+
+
+        
+        
+#______________
+
+        
+    root1=Tk()
+    root1.title('create new account')
+    width= root1.winfo_screenwidth()               
+
+    height= root1.winfo_screenheight()               
+
+    root1.geometry("%dx%d" % (width, height))
+
+    name=StringVar()
+    email=StringVar()
+    Password=StringVar()
+    confirmpass=StringVar()
     
 
    
-root.mainloop()
+    Label(root1,text='CREATE NEW ACCOUNT',bg='blue',fg='black',font=("Times new Roman Bold",20)).place(x=450,y=80)
+
+    lablename=Label(root1,text="Enter your name",font=("Times new Roman",10),fg='black').place(x=500,y=190)
+
+    entryname=Entry(root1,textvariable=name).place(x=625,y=190)
+
+    lablepass=Label(root1,text="password",font=("Times new Roman",10),fg='black').place(x=500,y=230)
+
+    entrypass=Entry(root1,show="*",textvariable=Password).place(x=625,y=230)
+
+    lablecpass=Label(root1,text="confirm password",font=("Times new Roman",10),fg='black').place(x=500,y=270)
+
+    entrycpass=Entry(root1,show="*",textvariable=confirmpass).place(x=625,y=270)
+
+    lableemail=Label(root1,text="Enter your mail",font=("Times new Roman",10),fg='black').place(x=500,y=300)
+
+    entryemail=Entry(root1,textvariable=email).place(x=625,y=300)
+
+  
+    #button
+
+    Button(root1,text='Create Account', command=create_account,bg='blue').place(x=550,y=400)
+
+
+    Button(root1,text='already have an account',command=go_to_login,bg='yellow').place(x=525,y=440)
+    
+    
+
+
+    root1.mainloop()
+create_new_account()
